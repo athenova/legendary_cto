@@ -3,6 +3,9 @@ from simple_blogger import CommonBlogger
 from simple_blogger.generators.YandexGenerator import YandexImageGenerator
 from datetime import datetime
 from datetime import timedelta
+from simple_blogger.senders.TelegramSender import TelegramSender
+from simple_blogger.senders.InstagramSender import InstagramSender
+
 
 class Project(CommonBlogger):
     def _example_task_creator(self):
@@ -34,13 +37,13 @@ class Project(CommonBlogger):
 
     def __init__(self, **kwargs):
         super().__init__(
-            review_chat_id=-1002374309134,
-            production_chat_id='@cto_in_fire',
             first_post_date=datetime(2025, 3, 9),
             #days_to_review=timedelta(2),
             days_between_posts=timedelta(7),
             #text_generator=YandexTextGenerator(),
             image_generator=YandexImageGenerator(),
+            reviewer=TelegramSender(),
+            senders=[TelegramSender(channel_id=f"@cto_in_fire")],
             topic_word_limit=100,
             **kwargs
         )
